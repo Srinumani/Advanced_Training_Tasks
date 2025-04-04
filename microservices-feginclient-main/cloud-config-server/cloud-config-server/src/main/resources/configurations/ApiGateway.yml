@@ -1,0 +1,27 @@
+eureka:
+  client:
+    register-with-eureka: false
+server:
+  port: 7075
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: Project-service
+          uri: lb://PROJECT-SERVICE  # ✅ Use service name if using Eureka
+          predicates:
+            - Path=/project/**
+        - id: Company-service
+          uri: lb://COMPANY-SERVICE  # ✅ Use service name if using Eureka
+          predicates:
+            - Path=/company/**
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
